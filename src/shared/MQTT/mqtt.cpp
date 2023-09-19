@@ -9,8 +9,8 @@ bool setupMQTT(String clientBaseId, MQTTClientCallbackSimpleFunction messageRece
     ledBlue();
     Serial.print("\nMQTT: Connecting...");
 
-    String idAsString = String(random(1, 1024));
-    clientBaseId += "_" + idAsString;
+    String nonce = String(random(1, 1024));
+    clientBaseId += "_" + nonce;
     char clientId[clientBaseId.length() + 1];
     clientBaseId.toCharArray(clientId, sizeof(clientId));
 

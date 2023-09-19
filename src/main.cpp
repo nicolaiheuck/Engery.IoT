@@ -6,7 +6,6 @@
 extern MQTTClient mqttClient;
 
 void ensureConnectivity();
-
 void onMessageReceivedAlarm(String &topic, String &payload);
 
 void setup() {
@@ -30,7 +29,7 @@ void ensureConnectivity() {
 
     while (!mqttClient.connected()) {
         ledBlue();
-        setupMQTT("iot_googlelai_test", onMessageReceivedAlarm);
+        setupMQTT("EGON_IoT", onMessageReceivedAlarm);
     }
 }
 
