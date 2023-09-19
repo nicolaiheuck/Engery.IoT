@@ -5,22 +5,30 @@ extern WiFiClient wifiClient;
 MQTTClient mqttClient;
 u_int8_t retries = 5;
 
-bool setupMQTT(char* clientId, MQTTClientCallbackSimpleFunction messageReceivedCallback) {
-  ledBlue();
-  Serial.print("\nMQTT: Connecting...");
+bool setupMQTT(String clientBaseId, MQTTClientCallbackSimpleFunction messageReceivedCallback) {
+    ledBlue();
+    Serial.print("\nMQTT: Connecting...");
 
-  mqttClient.begin(MQTT_BROKER_ADDRESS, wifiClient);
-  mqttClient.onMessage(messageReceivedCallback);
+    String idAsString = String(random(1, 1024));
+    clientBaseId += "_" + idAsString;
+    char clientId[clientBaseId.length() + 1];
+    clientBaseId.toCharArray(clientId, sizeof(clientId));
 
-  while (!mqttClient.connect(clientId, MQTT_USERNAME, MQTT_PASSWORD))
-  {
-    Serial.println("Trying to connect to broker");
-    delay(2500);
-    retries--;
-    if (retries == 0) return false;
-  }
+    mqttClient.begin(MQTT_BROKER_ADDRESS, wifiClient);
+    mqttClient.onMessage(messageReceivedCallback);
 
-  Serial.println("\nMQTT: Connected!");
-  ledGreen();
-  return true;
+    while (!mqttClient.connect(clientId, MQTT_USERNAME, MQTT_PASSWORD)) {
+        Serial.println("Trying to connect to broker");
+        delay(2500);
+        retries--;
+        if (retries == 0) {
+            ledRed();
+            return false;
+        }
+    }
+
+    Serial.print("\nMQTT: Connected! (id: ");
+    Serial.println(clientId + String(")"));
+    ledGreen();
+    return true;
 }

@@ -1,5 +1,5 @@
-#ifndef Svendeprove_PROJECT_SECRETS_H
-#define Svendeprove_PROJECT_SECRETS_H
+#ifndef SVENDEPROVE_PROJECT_SECRETS_H
+#define SVENDEPROVE_PROJECT_SECRETS_H
 
 #define SECRET_SSID "SibirienAP"
 #define SECRET_PASS "Siberia51244"
