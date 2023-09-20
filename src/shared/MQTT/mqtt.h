@@ -1,5 +1,5 @@
-#ifndef SVENDEPROVE_PROJECT_MQTT_H
-#define SVENDEPROVE_PROJECT_MQTT_H
+#ifndef ENERGY_IOT_MQTT_H
+#define ENERGY_IOT_MQTT_H
 
 #include <MQTT.h>
 #include "shared/RGB/rgb.h"
