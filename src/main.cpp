@@ -2,6 +2,7 @@
 #include "shared/RGB/rgb.h"
 #include "shared/WiFi/wifi.h"
 #include "shared/MQTT/mqtt.h"
+#include "light/light.h"
 
 extern MQTTClient mqttClient;
 
@@ -13,6 +14,7 @@ void setup() {
     Serial.begin(9600);
     setupRGB();
     ensureConnectivity();
+    setupLight();
 }
 
 void loop() {
@@ -38,4 +40,9 @@ void onMessageReceivedAlarm(String &topic, String &payload) {
     Serial.print(topic);
     Serial.print(" Payload: ");
     Serial.println(payload);
+
+    if (topic == MQTT_LIGHT_CONTROL) {
+        //NH_TODO: Parse payload
+        updateLight(true);
+    }
 }

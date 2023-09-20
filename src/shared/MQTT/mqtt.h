@@ -10,6 +10,7 @@
 
 // Topics
 #define MQTT_TEMPERATURE_TOPIC "energy/51.244/temperature"
+#define MQTT_LIGHT_CONTROL "energy/51.244/light"
 
 bool setupMQTT(String clientBaseId, MQTTClientCallbackSimpleFunction messageReceivedCallback);
 
