@@ -8,6 +8,9 @@
 #define MQTT_USERNAME "program"
 #define MQTT_BROKER_ADDRESS "10.131.15.57"
 
+// Topics
+#define MQTT_TEMPERATURE_TOPIC "energy/51.244/temperature"
+
 bool setupMQTT(String clientBaseId, MQTTClientCallbackSimpleFunction messageReceivedCallback);
 
 #endif
