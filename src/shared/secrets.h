@@ -4,4 +4,6 @@
 #define SECRET_SSID "SibirienAP"
 #define SECRET_PASS "Siberia51244"
 
+#define MQTT_PASSWORD "SuperSecretPassword1337"
+
 #endif
