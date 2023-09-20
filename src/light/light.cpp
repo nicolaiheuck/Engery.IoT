@@ -10,5 +10,5 @@ void setupLight() {
 }
 
 void updateLight(bool on) {
-    digitalWrite(LIGHT_PIN, HIGH);
+    digitalWrite(LIGHT_PIN, on);
 }

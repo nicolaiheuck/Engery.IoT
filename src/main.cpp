@@ -1,4 +1,5 @@
 #include <Adafruit_GFX.h>
+#include <ArduinoJson.h>
 #include "shared/RGB/rgb.h"
 #include "shared/WiFi/wifi.h"
 #include "shared/MQTT/mqtt.h"
@@ -45,7 +46,9 @@ void onMessageReceivedAlarm(String &topic, String &payload) {
     Serial.println(payload);
 
     if (topic == MQTT_LIGHT_CONTROL) {
-        //NH_TODO: Parse payload
-        updateLight(true);
+        DynamicJsonDocument jsonDoc(64);
+        deserializeJson(jsonDoc, payload);
+        bool newState = jsonDoc["newState"];
+        updateLight(newState);
     }
 }
