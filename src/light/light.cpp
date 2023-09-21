@@ -6,7 +6,6 @@ extern MQTTClient mqttClient;
 
 void setupLight() {
     pinMode(LIGHT_PIN, OUTPUT);
-    mqttClient.subscribe(MQTT_LIGHT_CONTROL);
 }
 
 void updateLight(bool on) {
