@@ -5,36 +5,37 @@
 
 extern MQTTClient mqttClient;
 
+void ensureConnectivity();
 void onMessageReceivedAlarm(String &topic, String &payload);
 
 void setup() {
-  Serial.begin(9600);
-  setupRGB();
-  bool success = setupWiFi();
-  if (!success) {
-    ledRed();
-  }
-  else {
-    ledGreen();
-  }
-  bool mqttSuccess = setupMQTT("iot_googlelai_test", onMessageReceivedAlarm);
-  if (mqttSuccess) {
-    ledBlue();
-  }
-  else {
-    Serial.println("MQTT connection failed!");
-    ledRed();
-  }
-  mqttClient.subscribe("/google_test");
+    randomSeed(analogRead(0));
+    Serial.begin(9600);
+    setupRGB();
+    ensureConnectivity();
 }
 
 void loop() {
+    ensureConnectivity();
     mqttClient.loop();
 }
 
+
+void ensureConnectivity() {
+    if (WiFi.status() != WL_CONNECTED) {
+        ledWhite();
+        ensureWiFiSetup();
+    }
+
+    while (!mqttClient.connected()) {
+        ledBlue();
+        setupMQTT("EGON_IoT", onMessageReceivedAlarm);
+    }
+}
+
 void onMessageReceivedAlarm(String &topic, String &payload) {
-  Serial.print("Topic: ");
-  Serial.print(topic);
-  Serial.print(" Payload: ");
-  Serial.println(payload);
+    Serial.print("Topic: ");
+    Serial.print(topic);
+    Serial.print(" Payload: ");
+    Serial.println(payload);
 }
