@@ -44,11 +44,4 @@ void onMessageReceivedAlarm(String &topic, String &payload) {
     Serial.print(topic);
     Serial.print(" Payload: ");
     Serial.println(payload);
-
-    if (topic == MQTT_LIGHT_CONTROL) {
-        DynamicJsonDocument jsonDoc(64);
-        deserializeJson(jsonDoc, payload);
-        bool newState = jsonDoc["newState"];
-        updateLight(newState);
-    }
 }

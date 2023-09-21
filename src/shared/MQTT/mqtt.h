@@ -9,8 +9,7 @@
 #define MQTT_BROKER_ADDRESS "10.131.15.57"
 
 // Topics
-#define MQTT_TEMPERATURE_TOPIC "EUC/51/244/pv/temp"
-#define MQTT_LIGHT_CONTROL "EUC/51/244/sp/light"
+#define MQTT_TEMPERATURE_TOPIC "EUC/51/244/pv"
 
 bool setupMQTT(String clientBaseId, MQTTClientCallbackSimpleFunction messageReceivedCallback);
 
