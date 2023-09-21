@@ -4,7 +4,7 @@ extern MQTTClient mqttClient;
 DHT dht(DHT11_PIN, DHT11);
 
 ulong lastTemperatureReadingMillis = 0;
-int temperatureInterval = 1000;
+int temperatureInterval = 5000;
 
 void setupTemp() {
     dht.begin();
@@ -17,11 +17,10 @@ void loopTemp() {
         float temperature = dht.readTemperature();
         float humidity = dht.readHumidity();
 
-
         DynamicJsonDocument payloadAsJson(128);
         payloadAsJson["temperature"] = temperature;
         payloadAsJson["humidity"] = humidity;
-        char payload[1024];
+        char payload[128];
         serializeJson(payloadAsJson, payload);
 
         Serial.print("MQTT Payload: ");
