@@ -1,5 +1,5 @@
-#ifndef SVENDEPROVE_PROJECT_RGB_H
-#define SVENDEPROVE_PROJECT_RGB_H
+#ifndef ENERGY_IOT_RGB_H
+#define ENERGY_IOT_RGB_H
 
 #include <utility/wifi_drv.h>
 

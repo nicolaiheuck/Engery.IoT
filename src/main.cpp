@@ -1,7 +1,10 @@
 #include <Adafruit_GFX.h>
+#include <ArduinoJson.h>
 #include "shared/RGB/rgb.h"
 #include "shared/WiFi/wifi.h"
 #include "shared/MQTT/mqtt.h"
+#include "temp/temp.h"
+#include "light/light.h"
 
 extern MQTTClient mqttClient;
 
@@ -9,15 +12,18 @@ void ensureConnectivity();
 void onMessageReceivedAlarm(String &topic, String &payload);
 
 void setup() {
-    randomSeed(analogRead(0));
     Serial.begin(9600);
+    setupTemp();
+    randomSeed(analogRead(0));
     setupRGB();
     ensureConnectivity();
+    setupLight();
 }
 
 void loop() {
     ensureConnectivity();
     mqttClient.loop();
+    loopTemp();
 }
 
 

@@ -1,12 +1,15 @@
-#ifndef SVENDEPROVE_PROJECT_MQTT_H
-#define SVENDEPROVE_PROJECT_MQTT_H
+#ifndef ENERGY_IOT_MQTT_H
+#define ENERGY_IOT_MQTT_H
 
 #include <MQTT.h>
 #include "shared/RGB/rgb.h"
+#include "shared/secrets.h"
 
 #define MQTT_USERNAME "program"
-#define MQTT_PASSWORD "SuperSecretPassword1337"
 #define MQTT_BROKER_ADDRESS "10.131.15.57"
+
+// Topics
+#define MQTT_TEMPERATURE_TOPIC "EUC/51/244/pv"
 
 bool setupMQTT(String clientBaseId, MQTTClientCallbackSimpleFunction messageReceivedCallback);
 

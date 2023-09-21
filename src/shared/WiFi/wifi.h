@@ -1,5 +1,5 @@
-#ifndef SVENDEPROVE_PROJECT_WIFI_H
-#define SVENDEPROVE_PROJECT_WIFI_H
+#ifndef ENERGY_IOT_WIFI_H
+#define ENERGY_IOT_WIFI_H
 
 #include <WiFiNINA.h>
 #include "../secrets.h"
