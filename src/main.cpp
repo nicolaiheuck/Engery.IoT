@@ -7,6 +7,7 @@
 #include "shared/DS3231/DS3231.h"
 #include "power/power.h"
 #include "shared/RTC/RTC.h"
+#include "thermostat/thermostat.h"
 
 extern MQTTClient mqttClient;
 extern DS3231 clock;
@@ -21,6 +22,7 @@ void setup() {
     setupRGB();
     setupPower();
     setupRTC();
+    setupThermostat();
     ensureConnectivity();
 }
 
@@ -29,6 +31,7 @@ void loop() {
     mqttClient.loop();
     loopTemp();
     loopRoomPower();
+    loopThermostat();
 }
 
 void ensureConnectivity() {
