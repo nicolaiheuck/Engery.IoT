@@ -4,9 +4,11 @@
 #include "shared/WiFi/wifi.h"
 #include "shared/MQTT/mqtt.h"
 #include "temp/temp.h"
-#include "light/light.h"
+#include "shared/DS3231/DS3231.h"
+#include "power/power.h"
 
 extern MQTTClient mqttClient;
+extern DS3231 clock;
 
 void ensureConnectivity();
 void onMessageReceivedAlarm(String &topic, String &payload);
@@ -17,15 +19,18 @@ void setup() {
     randomSeed(analogRead(0));
     setupRGB();
     ensureConnectivity();
-    setupLight();
+    setupPower();
+
+    clock.begin();
+    clock.setDateTime(__DATE__, "11:21:50");
 }
 
 void loop() {
     ensureConnectivity();
     mqttClient.loop();
     loopTemp();
+    loopRoomPower();
 }
-
 
 void ensureConnectivity() {
     if (WiFi.status() != WL_CONNECTED) {
