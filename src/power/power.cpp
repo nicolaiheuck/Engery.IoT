@@ -1,6 +1,6 @@
 #include "power.h"
 
-DS3231 clock;
+extern DS3231 clock;
 
 int roomOnHour = 0;
 int roomOnMinute = 0;

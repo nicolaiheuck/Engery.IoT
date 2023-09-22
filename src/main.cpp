@@ -6,6 +6,7 @@
 #include "temp/temp.h"
 #include "shared/DS3231/DS3231.h"
 #include "power/power.h"
+#include "shared/RTC/RTC.h"
 
 extern MQTTClient mqttClient;
 extern DS3231 clock;
@@ -15,14 +16,12 @@ void onMessageReceivedAlarm(String &topic, String &payload);
 
 void setup() {
     Serial.begin(9600);
-    setupTemp();
     randomSeed(analogRead(0));
+    setupTemp();
     setupRGB();
-    ensureConnectivity();
     setupPower();
-
-    clock.begin();
-    clock.setDateTime(__DATE__, "11:21:50");
+    setupRTC();
+    ensureConnectivity();
 }
 
 void loop() {
