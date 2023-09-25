@@ -13,15 +13,9 @@ void loopRoomPower() {
     RTCDateTime dateTime = clock.getDateTime();
     if (roomLastCheckedMillis + ROOM_CHECK_INTERVAL < millis()) {
         roomLastCheckedMillis = millis();
-        Serial.print("Checking room power (");
-        serialPrintFormattedDateTime(dateTime);
-        Serial.println(")");
-
-        Serial.println("roomCurrentState: " + String(roomCurrentState));
-        Serial.println("roomOnHour: " + String(roomOnHour));
-        Serial.println("roomOnMinute: " + String(roomOnMinute));
-        Serial.println("roomOffHour: " + String(roomOffHour));
-        Serial.println("roomOffMinute: " + String(roomOffMinute));
+//        Serial.print("Checking room power (");
+//        serialPrintFormattedDateTime(dateTime);
+//        Serial.println(")");
 
         bool pastPowerOnTime = dateTime.hour > roomOnHour || (dateTime.hour == roomOnHour && dateTime.minute >= roomOnMinute);
         bool pastPowerOffTime = dateTime.hour > roomOffHour || (dateTime.hour == roomOffHour && dateTime.minute >= roomOffMinute);

@@ -20,10 +20,10 @@ void setup() {
     randomSeed(analogRead(0));
     setupTemp();
     setupRGB();
-    setupPower();
     setupRTC();
-    setupThermostat();
     ensureConnectivity();
+    setupThermostat();
+    setupPower();
 }
 
 void loop() {
@@ -43,6 +43,7 @@ void ensureConnectivity() {
     while (!mqttClient.connected()) {
         ledBlue();
         setupMQTT("EGON_IoT", onMessageReceivedAlarm);
+        mqttClient.subscribe("EUC/51/244/sp/thermostat");
     }
 }
 
@@ -51,4 +52,11 @@ void onMessageReceivedAlarm(String &topic, String &payload) {
     Serial.print(topic);
     Serial.print(" Payload: ");
     Serial.println(payload);
+
+    if (topic.endsWith("/sp/thermostat")) {
+        DynamicJsonDocument newSettings(256);
+        deserializeJson(newSettings, payload);
+        Serial.println("setThermostatSettings called");
+        setThermostatSettings(newSettings["newTemperature"], newSettings["newHysteresis"]);
+    }
 }

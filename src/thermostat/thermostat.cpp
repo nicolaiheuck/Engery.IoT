@@ -1,6 +1,8 @@
 #include "thermostat.h"
 
-float targetTemperature = 22; // NH_TODO: Get this value from MQTT
+float hysteresis = -1;
+float targetTemperature = -1;
+ulong lastCheckedTemperature = 0;
 extern DHT dht;
 
 void setupThermostat() {
@@ -9,15 +11,24 @@ void setupThermostat() {
 }
 
 void loopThermostat() {
-    //NH_TODO: Add THERMOSTAT_CHECK_INTERVAL
-    float temperature = dht.readTemperature();
-    if (temperature > targetTemperature + HYSTERESIS) {
-        tooHot();
-    } else if (temperature < targetTemperature - HYSTERESIS) {
-        tooCold();
-    } else {
-        idealTemperature();
+    if (hysteresis == -1 || targetTemperature == -1) return;
+    if (lastCheckedTemperature + THERMOSTAT_CHECK_INTERVAL < millis()) {
+        lastCheckedTemperature = millis();
+
+        float temperature = dht.readTemperature();
+        if (temperature > targetTemperature + hysteresis) {
+            tooHot();
+        } else if (temperature < targetTemperature - hysteresis) {
+            tooCold();
+        } else {
+            idealTemperature();
+        }
     }
+}
+
+void setThermostatSettings(float newTargetTemperature, float newHysteresis) {
+    targetTemperature = newTargetTemperature;
+    hysteresis = newHysteresis;
 }
 
 void idealTemperature() {
