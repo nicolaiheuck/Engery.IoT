@@ -3,7 +3,11 @@
 
 #include "EmonLib.h"
 
+#define POWER_READING_PIN A6
+#define POWER_READING_INTERVAL (1000 * 60)
+
 void setupPower();
-double getUsageInAmps();
+void loopPower();
+void resetPowerReadings();
 
 #endif

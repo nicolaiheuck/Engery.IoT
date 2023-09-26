@@ -3,7 +3,8 @@
 
 #include <DHT.h>
 #include <ArduinoJson.h>
-#include "../shared/MQTT/mqtt.h"
+#include "power/power.h"
+#include "shared/MQTT/mqtt.h"
 
 #define DHT11_PIN 7
 #define TEMPERATURE_INTERVAL (1000 * 60)
