@@ -10,12 +10,28 @@ void setupTemp() {
     dht.begin();
 }
 
+float bullshitData() {
+    long milliSeconds = millis();
+    float result = 0;
+
+    result = milliSeconds * 13.37;
+
+    while (result > 50)
+    {
+        result = result / (13.37 * 0.5);
+    }
+
+    return result;
+}
+
 void loopTemp() {
     if (lastTemperatureReadingMillis + temperatureInterval < millis()) {
         lastTemperatureReadingMillis = millis();
 
-        float temperature = dht.readTemperature();
-        float humidity = dht.readHumidity();
+//        float temperature = dht.readTemperature();
+//        float humidity = dht.readHumidity();
+        float temperature = bullshitData();
+        float humidity = bullshitData();
 
         DynamicJsonDocument payloadAsJson(128);
         payloadAsJson["temperature"] = temperature;

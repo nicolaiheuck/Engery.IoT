@@ -9,5 +9,6 @@
 
 void setupTemp();
 void loopTemp();
+float bullshitData();
 
 #endif
