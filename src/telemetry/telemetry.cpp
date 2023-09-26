@@ -1,20 +1,25 @@
-#include "temp.h"
+#include "telemetry.h"
+#include "power/power.h"
 
 extern MQTTClient mqttClient;
 DHT dht(DHT11_PIN, DHT11);
 
 ulong lastTemperatureReadingMillis = 0;
 
-void setupTemp() {
+void setupTelemetry() {
     dht.begin();
+    setupPower();
+    //NH_TODO: Begin power
 }
 
-void loopTemp() {
+void loopTelemetry() {
     if (lastTemperatureReadingMillis + TEMPERATURE_INTERVAL < millis()) {
         lastTemperatureReadingMillis = millis();
 
         float temperature = dht.readTemperature();
         float humidity = dht.readHumidity();
+        double powerUsageInAmps = getUsageInAmps();
+        double watt = powerUsageInAmps * 230;
 
         DynamicJsonDocument payloadAsJson(128);
         payloadAsJson["temperature"] = temperature;

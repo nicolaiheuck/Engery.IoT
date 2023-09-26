@@ -1,5 +1,5 @@
-#ifndef ENERGY_IOT_TEMP_H
-#define ENERGY_IOT_TEMP_H
+#ifndef ENERGY_IOT_TELEMETRY_H
+#define ENERGY_IOT_TELEMETRY_H
 
 #include <DHT.h>
 #include <ArduinoJson.h>
@@ -8,7 +8,7 @@
 #define DHT11_PIN 7
 #define TEMPERATURE_INTERVAL (1000 * 60)
 
-void setupTemp();
-void loopTemp();
+void setupTelemetry();
+void loopTelemetry();
 
 #endif
