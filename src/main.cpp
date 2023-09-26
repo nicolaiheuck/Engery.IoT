@@ -30,9 +30,10 @@ void setup() {
 void loop() {
     ensureConnectivity();
     mqttClient.loop();
-    loopTelemetry();
+    loopPower();
     loopRoomPower();
     loopThermostat();
+    loopTelemetry();
 }
 
 void ensureConnectivity() {
