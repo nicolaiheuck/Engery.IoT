@@ -33,7 +33,7 @@ void ensureConnectivity() {
     while (!mqttClient.connected()) {
         ledBlue();
         setupMQTT("EGON_IoT", onMessageReceivedAlarm);
-        mqttClient.subscribe("EUC/51/244/sp/thermostat"); //NH_TODO: Move to #define
+        mqttClient.subscribe(MQTT_GET_THERMOSTAT_SETTINGS);
     }
 }
 
@@ -43,7 +43,7 @@ void onMessageReceivedAlarm(String &topic, String &payload) {
     Serial.print(" Payload: ");
     Serial.println(payload);
 
-    if (topic.endsWith("/sp/thermostat")) { //NH_TODO: Move to #define
+    if (topic.endsWith(MQTT_GET_THERMOSTAT_SETTINGS_ENDS_WITH)) {
         DynamicJsonDocument newSettings(256);
         deserializeJson(newSettings, payload);
         Serial.println("setThermostatSettings called");

@@ -25,7 +25,7 @@ void loopTelemetry() {
 
         Serial.print("MQTT Payload: ");
         Serial.println(payload);
-        mqttClient.publish(MQTT_TEMPERATURE_TOPIC, payload);
+        mqttClient.publish(MQTT_TELEMETRY_TOPIC, payload);
 
         resetPowerReadings();
     }
