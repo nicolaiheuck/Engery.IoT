@@ -1,6 +1,6 @@
 /**
- *  @filename   :   epd2in9_V2.h
- *  @brief      :   Header file for e-paper display library epd2in9_V2.cpp
+ *  @filename   :   Display.h
+ *  @brief      :   Header file for e-paper display library Display.cpp
  *  @author     :   
  *  
  *  Copyright (C) Waveshare     Nov 09 2020

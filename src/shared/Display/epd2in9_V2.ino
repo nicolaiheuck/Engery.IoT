@@ -1,5 +1,5 @@
 /**
- *  @filename   :   epd2in9_V2-demo.ino
+ *  @filename   :   Display-demo.ino
  *  @brief      :   2.9inch e-paper V2 display demo
  *  @author     :   Yehui from Waveshare
  *
@@ -46,7 +46,16 @@ unsigned long time_now_s;
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(115200);
+  Serial.begin(9600);
+  delay(500);
+  
+  for (int i = 0; i < 10; i++)
+  {
+    Serial.print(".");
+    delay(123);
+  }
+
+
   if (epd.Init() != 0) {
       Serial.print("e-Paper init failed");
       return;
@@ -110,7 +119,13 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  Serial.println("Initiated!");
+  for (int i = 0; i < 20; i++)
+  {
+    Serial.print(String(time_start_ms));
+    delay(123);
+  }
+  //put your main code here, to run repeatedly:
   time_now_s = (millis() - time_start_ms) / 1000;
   char time_string[] = {'0', '0', ':', '0', '0', '\0'};
   time_string[0] = time_now_s / 60 / 10 + '0';
@@ -127,5 +142,5 @@ void loop() {
   epd.SetFrameMemory_Partial(paint.GetImage(), 80, 72, paint.GetWidth(), paint.GetHeight());
   epd.DisplayFrame_Partial();
 
-  // delay(300);
+  delay(300);
 }

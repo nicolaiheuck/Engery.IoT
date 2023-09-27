@@ -8,6 +8,7 @@
 #include "power/power.h"
 #include "shared/RTC/RTC.h"
 #include "thermostat/thermostat.h"
+#include "shared/Display/Display.h"
 
 extern MQTTClient mqttClient;
 extern DS3231 clock;
@@ -16,22 +17,32 @@ void ensureConnectivity();
 void onMessageReceivedAlarm(String &topic, String &payload);
 
 void setup() {
-    Serial.begin(9600);
-    randomSeed(analogRead(0));
-    setupTemp();
-    setupRGB();
-    setupRTC();
-    ensureConnectivity();
-    setupThermostat();
-    setupPower();
+//    randomSeed(analogRead(0));
+//    setupTemp();
+//    setupRGB();
+//    setupRTC();
+//    ensureConnectivity();
+//    setupThermostat();
+//    setupPower();
+    setupDisplay();
 }
 
 void loop() {
-    ensureConnectivity();
-    mqttClient.loop();
-    loopTemp();
-    loopRoomPower();
-    loopThermostat();
+//    ensureConnectivity();
+//    mqttClient.loop();
+//    loopTemp();
+//    loopRoomPower();
+//    loopThermostat();
+    DisplayText(10, 20, "test1");
+    delay(1234);
+    DisplayText(20, 30, "test2");
+    delay(1234);
+    DisplayText(30, 40, "test3");
+    delay(1234);
+    DisplayText(40, 50, "test4");
+    delay(1234);
+    DisplayText(50, 60, "test5");
+    delay(1234);
 }
 
 void ensureConnectivity() {
@@ -59,4 +70,6 @@ void onMessageReceivedAlarm(String &topic, String &payload) {
         Serial.println("setThermostatSettings called");
         setThermostatSettings(newSettings["newTemperature"], newSettings["newHysteresis"]);
     }
+
+    if (topic.endsWith("/location"))
 }

@@ -1,5 +1,5 @@
 /**
- *  @filename   :   epd2in9_V2.cpp
+ *  @filename   :   Display.cpp
  *  @brief      :   Implements for e-paper library
  *  @author     :  
  *
