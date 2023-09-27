@@ -5,15 +5,15 @@ extern double kiloWattHours;
 extern int peakKiloWatt;
 
 DHT dht(DHT11_PIN, DHT11);
-ulong lastTemperatureReadingMillis = 0;
+ulong lastTelemetryReadingMillis = 0;
 
 void setupTelemetry() {
     dht.begin();
 }
 
 void loopTelemetry() {
-    if (lastTemperatureReadingMillis + TEMPERATURE_INTERVAL < millis()) {
-        lastTemperatureReadingMillis = millis();
+    if (lastTelemetryReadingMillis + TELEMETRY_INTERVAL < millis()) {
+        lastTelemetryReadingMillis = millis();
 
         DynamicJsonDocument payloadAsJson(256);
         payloadAsJson["temperature"] = dht.readTemperature();
@@ -26,6 +26,7 @@ void loopTelemetry() {
         Serial.print("MQTT Payload: ");
         Serial.println(payload);
         mqttClient.publish(MQTT_TEMPERATURE_TOPIC, payload);
+
         resetPowerReadings();
     }
 }

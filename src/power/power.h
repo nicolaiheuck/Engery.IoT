@@ -5,6 +5,7 @@
 
 #define POWER_READING_PIN A6
 #define POWER_READING_INTERVAL (1000 * 1)
+#define POWER_READING_CALIBRATION 181
 
 void setupPower();
 void loopPower();

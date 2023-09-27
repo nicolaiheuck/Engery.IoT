@@ -7,7 +7,7 @@ ulong lastPowerReadingMillis = 0;
 
 void setupPower() {
     pinMode(POWER_READING_PIN, INPUT);
-    monitor.current(POWER_READING_PIN, 181);
+    monitor.current(POWER_READING_PIN, POWER_READING_CALIBRATION);
     monitor.calcIrms(7500); // First time calibration to avoid high initial readings
 }
 
