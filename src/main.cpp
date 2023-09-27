@@ -9,40 +9,31 @@
 #include "shared/RTC/RTC.h"
 #include "thermostat/thermostat.h"
 #include "shared/Display/Display.h"
+#include "main.h"
 
 extern MQTTClient mqttClient;
 extern DS3231 clock;
 
-void ensureConnectivity();
-void onMessageReceivedAlarm(String &topic, String &payload);
-
 void setup() {
-//    randomSeed(analogRead(0));
-//    setupTemp();
-//    setupRGB();
-//    setupRTC();
-//    ensureConnectivity();
-//    setupThermostat();
-//    setupPower();
     setupDisplay();
+    Serial.begin(9600);
+    randomSeed(analogRead(0));
+    setupRGB();
+    setupRTC();
+    setupTelemetry();
+    setupThermostat();
+    setupRoomPower();
+    setupPower();
+    ensureConnectivity();
 }
 
 void loop() {
-//    ensureConnectivity();
-//    mqttClient.loop();
-//    loopTemp();
-//    loopRoomPower();
-//    loopThermostat();
-    DisplayText(10, 20, "test1");
-    delay(1234);
-    DisplayText(20, 30, "test2");
-    delay(1234);
-    DisplayText(30, 40, "test3");
-    delay(1234);
-    DisplayText(40, 50, "test4");
-    delay(1234);
-    DisplayText(50, 60, "test5");
-    delay(1234);
+    ensureConnectivity();
+    mqttClient.loop();
+    loopPower();
+    loopRoomPower();
+    loopThermostat();
+    loopTelemetry();
 }
 
 void ensureConnectivity() {
@@ -54,7 +45,7 @@ void ensureConnectivity() {
     while (!mqttClient.connected()) {
         ledBlue();
         setupMQTT("EGON_IoT", onMessageReceivedAlarm);
-        mqttClient.subscribe("EUC/51/244/sp/thermostat");
+        mqttClient.subscribe(MQTT_GET_THERMOSTAT_SETTINGS);
     }
 }
 
@@ -64,7 +55,7 @@ void onMessageReceivedAlarm(String &topic, String &payload) {
     Serial.print(" Payload: ");
     Serial.println(payload);
 
-    if (topic.endsWith("/sp/thermostat")) {
+    if (topic.endsWith(MQTT_GET_THERMOSTAT_SETTINGS_ENDS_WITH)) {
         DynamicJsonDocument newSettings(256);
         deserializeJson(newSettings, payload);
         Serial.println("setThermostatSettings called");
