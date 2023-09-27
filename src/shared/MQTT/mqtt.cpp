@@ -1,5 +1,4 @@
 #include "mqtt.h"
-#include "../WiFi/wifi.h"
 
 extern WiFiClient wifiClient;
 MQTTClient mqttClient;
