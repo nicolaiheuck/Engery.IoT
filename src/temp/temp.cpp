@@ -27,8 +27,6 @@ void loopTemp() {
     if (lastTemperatureReadingMillis + TEMPERATURE_INTERVAL < millis()) {
         lastTemperatureReadingMillis = millis();
 
-//        float temperature = dht.readTemperature();
-//        float humidity = dht.readHumidity();
         float temperature = bullshitData();
         float humidity = bullshitData();
 
