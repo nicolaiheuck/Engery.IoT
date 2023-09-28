@@ -3,7 +3,7 @@
 #include "shared/RGB/rgb.h"
 #include "shared/WiFi/wifi.h"
 #include "shared/MQTT/mqtt.h"
-//#include "temp/temp.h"
+#include "temp/temp.h"
 #include "shared/DS3231/DS3231.h"
 #include "power/power.h"
 #include "shared/RTC/RTC.h"
@@ -19,21 +19,21 @@ void setup() {
     Serial.begin(9600);
     randomSeed(analogRead(0));
     setupRGB();
-//    setupRTC();
-//    setupTelemetry();
-//    setupThermostat();
-//    setupRoomPower();
-//    setupPower();
+    setupRTC();
+    setupTelemetry();
+    setupThermostat();
+    setupRoomPower();
+    setupPower();
     ensureConnectivity();
 }
 
 void loop() {
     ensureConnectivity();
     mqttClient.loop();
-//    loopPower();
-//    loopRoomPower();
-//    loopThermostat();
-//    loopTelemetry();
+    loopPower();
+    loopRoomPower();
+    loopThermostat();
+    loopTelemetry();
 }
 
 void ensureConnectivity() {
