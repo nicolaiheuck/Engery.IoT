@@ -1,9 +1,21 @@
+#include <Adafruit_GFX.h>
+#include <ArduinoJson.h>
+#include "shared/RGB/rgb.h"
+#include "shared/WiFi/wifi.h"
+#include "shared/MQTT/mqtt.h"
+#include "temp/temp.h"
+#include "shared/DS3231/DS3231.h"
+#include "power/power.h"
+#include "shared/RTC/RTC.h"
+#include "thermostat/thermostat.h"
+#include "shared/Display/Display.h"
 #include "main.h"
 
 extern MQTTClient mqttClient;
 extern DS3231 clock;
 
 void setup() {
+    setupDisplay();
     Serial.begin(9600);
     randomSeed(analogRead(0));
     setupRGB();
@@ -34,6 +46,7 @@ void ensureConnectivity() {
         ledBlue();
         setupMQTT("EGON_IoT", onMessageReceivedAlarm);
         mqttClient.subscribe(MQTT_GET_THERMOSTAT_SETTINGS);
+        mqttClient.subscribe(MQTT_GET_LOCATION_INFO);
     }
 }
 
@@ -48,5 +61,9 @@ void onMessageReceivedAlarm(String &topic, String &payload) {
         deserializeJson(newSettings, payload);
         Serial.println("setThermostatSettings called");
         setThermostatSettings(newSettings["newTemperature"], newSettings["newHysteresis"]);
+    }
+
+    if (topic.endsWith(MQTT_GET_LOCATION_INFO_ENDS_WITH)) {
+        DisplayDeserializeMQTTPayload(payload);
     }
 }
