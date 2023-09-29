@@ -14,6 +14,7 @@ void setup() {
     setupRoomPower();
     setupPower();
     ensureConnectivity();
+    requestLocation();
 }
 
 void loop() {
@@ -23,6 +24,7 @@ void loop() {
     loopRoomPower();
     loopThermostat();
     loopTelemetry();
+    loopDisplay();
 }
 
 void ensureConnectivity() {
@@ -54,5 +56,6 @@ void onMessageReceivedAlarm(String &topic, String &payload) {
 
     if (topic.endsWith(MQTT_GET_LOCATION_INFO_ENDS_WITH)) {
         DisplayDeserializeMQTTPayload(payload);
+        setRoomSettings(payload);
     }
 }

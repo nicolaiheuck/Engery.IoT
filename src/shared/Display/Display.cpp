@@ -4,9 +4,12 @@
 
 #include "Display.h"
 
+extern DS3231 clock;
+extern MQTTClient mqttClient;
 unsigned char image[10240];
 Paint paint(image, 0, 0);
 Epd epd;
+int lastCheckedDay = -1;
 
 /**
  *  @brief: Sets up the display
@@ -104,4 +107,16 @@ void DisplayDeserializeMQTTPayload(String payload){
     DisplayText(5,5, _locationDisplayText, &Font24, true);
     DisplayText(0, 2, data, &Font20);
     DisplayDisplay();
+}
+
+void requestLocation() {
+    mqttClient.publish(MQTT_REQUEST_LOCATION_TOPIC, "42");
+}
+
+void loopDisplay() {
+    RTCDateTime dateTime = clock.getDateTime();
+    if (dateTime.hour == 0 && dateTime.minute == 0 && dateTime.day != lastCheckedDay) {
+        lastCheckedDay = dateTime.day;
+        requestLocation();
+    }
 }
