@@ -10,6 +10,7 @@
 #include "shared/Display/epdpaint.h"
 #include "shared/Display/imagedata.h"
 #include <ArduinoJson.h>
+#include "shared/MQTT/mqtt.h"
 
 #define COLORED 0
 #define UNCOLORED 1
@@ -19,5 +20,6 @@ void DisplayDisplay(void);
 void DisplayClear(int color);
 void setupDisplay(void);
 void DisplayDeserializeMQTTPayload(String payload);
+void requestLocation();
 
 #endif //ENGERY_IOT_DISPLAY_H

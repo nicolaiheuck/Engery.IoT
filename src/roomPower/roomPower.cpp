@@ -51,9 +51,31 @@ void serialPrintFormattedDateTime(RTCDateTime dateTime) {
 void setupRoomPower() {
     pinMode(ROOM_POWER_RELAY_PIN, OUTPUT);
     digitalWrite(ROOM_POWER_RELAY_PIN, HIGH);
+}
 
-    roomOnHour = 11;
-    roomOnMinute = 22;
-    roomOffHour = 11;
-    roomOffMinute = 23;
+void setRoomSettings(String &payload) {
+    DynamicJsonDocument locationData(1024);
+    deserializeJson(locationData, payload);
+
+    String startDate = locationData["ClassStartdate"];
+    String endDate = locationData["ClassEnddate"];
+    getHourAndMinuteFromDateTimeString(startDate, &roomOnHour, &roomOnMinute);
+    Serial.println("roomOnHour: " + String(roomOnHour));
+    Serial.println("roomOnMinute: " + String(roomOnMinute));
+
+    getHourAndMinuteFromDateTimeString(endDate, &roomOffHour, &roomOffMinute);
+    Serial.println("roomOffHour: " + String(roomOffHour));
+    Serial.println("roomOffMinute: " + String(roomOffMinute));
+}
+
+void getHourAndMinuteFromDateTimeString(String &dateTime, int *hour, int *minute) {
+    int timeSplitterIndex = dateTime.indexOf("T");
+    int firstColonIndex = dateTime.indexOf(":");
+    int secondColonIndex = firstColonIndex + 3;
+
+    String parsedHour = dateTime.substring(timeSplitterIndex + 1, firstColonIndex);
+    String parsedMinute = dateTime.substring(firstColonIndex + 1, secondColonIndex);
+
+    *hour = parsedHour.toInt();
+    *minute = parsedMinute.toInt();
 }

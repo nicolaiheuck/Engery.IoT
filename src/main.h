@@ -10,6 +10,7 @@
 #include "roomPower/roomPower.h"
 #include "shared/DS3231/DS3231.h"
 #include "shared/RTC/RTC.h"
+#include "shared/Display/Display.h"
 #include "thermostat/thermostat.h"
 #include "power/power.h"
 

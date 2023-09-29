@@ -6,7 +6,7 @@ const char pass[] = SECRET_PASS;
 WiFiClient wifiClient;
 
 bool setupWiFi() {
-  int retry = 15;
+  int retry = 1;
   ledWhite();
   Serial.print("WiFi: Connecting...");
   WiFi.begin(ssid, pass);
