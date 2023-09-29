@@ -110,7 +110,7 @@ void DisplayDeserializeMQTTPayload(String payload){
 }
 
 void requestLocation() {
-    mqttClient.publish(MQTT_REQUEST_LOCATION_TOPIC, "42");
+    mqttClient.publish(MQTT_REQUEST_LOCATION_TOPIC);
     Serial.println("New location info requested");
 }
 

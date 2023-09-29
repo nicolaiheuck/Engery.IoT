@@ -59,8 +59,8 @@ void setRoomSettings(String &payload) {
 
     String startDate = locationData["ClassStartdate"];
     String endDate = locationData["ClassEnddate"];
-    getHourAndMinuteFromDateTimeString(startDate, &roomOnHour, &roomOnMinute);
 
+    getHourAndMinuteFromDateTimeString(startDate, &roomOnHour, &roomOnMinute);
     getHourAndMinuteFromDateTimeString(endDate, &roomOffHour, &roomOffMinute);
 }
 
