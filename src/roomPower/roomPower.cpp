@@ -60,12 +60,8 @@ void setRoomSettings(String &payload) {
     String startDate = locationData["ClassStartdate"];
     String endDate = locationData["ClassEnddate"];
     getHourAndMinuteFromDateTimeString(startDate, &roomOnHour, &roomOnMinute);
-    Serial.println("roomOnHour: " + String(roomOnHour));
-    Serial.println("roomOnMinute: " + String(roomOnMinute));
 
     getHourAndMinuteFromDateTimeString(endDate, &roomOffHour, &roomOffMinute);
-    Serial.println("roomOffHour: " + String(roomOffHour));
-    Serial.println("roomOffMinute: " + String(roomOffMinute));
 }
 
 void getHourAndMinuteFromDateTimeString(String &dateTime, int *hour, int *minute) {

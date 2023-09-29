@@ -50,7 +50,6 @@ void onMessageReceivedAlarm(String &topic, String &payload) {
     if (topic.endsWith(MQTT_GET_THERMOSTAT_SETTINGS_ENDS_WITH)) {
         DynamicJsonDocument newSettings(256);
         deserializeJson(newSettings, payload);
-        Serial.println("setThermostatSettings called");
         setThermostatSettings(newSettings["newTemperature"], newSettings["newHysteresis"]);
     }
 
