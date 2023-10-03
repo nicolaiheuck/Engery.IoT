@@ -7,7 +7,7 @@
 [![License][license-shield]][license-url]
 
 # EGON
-#### Energy Grip Optimization Network
+#### Energy Grid Optimization Network
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
