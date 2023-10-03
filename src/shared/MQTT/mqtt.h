@@ -15,7 +15,7 @@
 #define MQTT_GET_THERMOSTAT_SETTINGS_ENDS_WITH "/sp/thermostat"
 #define MQTT_GET_LOCATION_INFO "EUC/51/244/location"
 #define MQTT_GET_LOCATION_INFO_ENDS_WITH "/location"
-#define MQTT_REQUEST_LOCATION_TOPIC "EUC/51/244/requestlocation/location"
+#define MQTT_REQUEST_LOCATION_TOPIC "EUC/51/244/pv/requestlocation/location"
 
 bool setupMQTT(String clientBaseId, MQTTClientCallbackSimpleFunction messageReceivedCallback);
 

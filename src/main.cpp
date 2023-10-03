@@ -1,14 +1,3 @@
-#include <Adafruit_GFX.h>
-#include <ArduinoJson.h>
-#include "shared/RGB/rgb.h"
-#include "shared/WiFi/wifi.h"
-#include "shared/MQTT/mqtt.h"
-#include "temp/temp.h"
-#include "shared/DS3231/DS3231.h"
-#include "power/power.h"
-#include "shared/RTC/RTC.h"
-#include "thermostat/thermostat.h"
-#include "shared/Display/Display.h"
 #include "main.h"
 
 extern MQTTClient mqttClient;
@@ -25,6 +14,7 @@ void setup() {
     setupRoomPower();
     setupPower();
     ensureConnectivity();
+    requestLocation();
 }
 
 void loop() {
@@ -34,6 +24,7 @@ void loop() {
     loopRoomPower();
     loopThermostat();
     loopTelemetry();
+    loopDisplay();
 }
 
 void ensureConnectivity() {
@@ -59,11 +50,11 @@ void onMessageReceivedAlarm(String &topic, String &payload) {
     if (topic.endsWith(MQTT_GET_THERMOSTAT_SETTINGS_ENDS_WITH)) {
         DynamicJsonDocument newSettings(256);
         deserializeJson(newSettings, payload);
-        Serial.println("setThermostatSettings called");
         setThermostatSettings(newSettings["newTemperature"], newSettings["newHysteresis"]);
     }
 
     if (topic.endsWith(MQTT_GET_LOCATION_INFO_ENDS_WITH)) {
         DisplayDeserializeMQTTPayload(payload);
+        setRoomSettings(payload);
     }
 }
