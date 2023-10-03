@@ -1,8 +1,7 @@
 #include "mqtt.h"
-#include "../WiFi/wifi.h"
 
 extern WiFiClient wifiClient;
-MQTTClient mqttClient;
+MQTTClient mqttClient(1024);
 u_int8_t retries = 5;
 
 bool setupMQTT(String clientBaseId, MQTTClientCallbackSimpleFunction messageReceivedCallback) {

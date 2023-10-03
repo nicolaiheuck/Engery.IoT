@@ -1,59 +1,37 @@
 #include "power.h"
 
-extern DS3231 clock;
+EnergyMonitor monitor;
+double kiloWattHours = 0;
+int peakKiloWatt = 0;
+ulong lastPowerReadingMillis = 0;
 
-int roomOnHour = 0;
-int roomOnMinute = 0;
-int roomOffHour = 0;
-int roomOffMinute = 0;
-bool roomCurrentState = false;
-ulong roomLastCheckedMillis = 0;
+void setupPower() {
+    pinMode(POWER_READING_PIN, INPUT);
+    monitor.current(POWER_READING_PIN, POWER_READING_CALIBRATION);
+    monitor.calcIrms(7500); // First time calibration to avoid high initial readings
+}
 
-void loopRoomPower() {
-    RTCDateTime dateTime = clock.getDateTime();
-    if (roomLastCheckedMillis + ROOM_CHECK_INTERVAL < millis()) {
-        roomLastCheckedMillis = millis();
-//        Serial.print("Checking room power (");
-//        serialPrintFormattedDateTime(dateTime);
-//        Serial.println(")");
+void loopPower() {
+    // A : RMSCurrent
+    // W : RMSPower
+    // kWh : kiloWattHours
+    // W : peakKiloWatt
+    if (lastPowerReadingMillis + POWER_READING_INTERVAL < millis()) {
+        lastPowerReadingMillis = millis();
 
-        bool pastPowerOnTime = dateTime.hour > roomOnHour || (dateTime.hour == roomOnHour && dateTime.minute >= roomOnMinute);
-        bool pastPowerOffTime = dateTime.hour > roomOffHour || (dateTime.hour == roomOffHour && dateTime.minute >= roomOffMinute);
-
-        if (!roomCurrentState && pastPowerOnTime && !pastPowerOffTime) {
-            turnOnPower();
+        double RMSCurrent = monitor.calcIrms(1480);
+        int RMSPower = 230 * RMSCurrent;    //Calculates RMS Power Assuming Voltage 230VAC
+        if (RMSPower > peakKiloWatt) {
+            peakKiloWatt = RMSPower;
         }
-        else if (roomCurrentState && pastPowerOffTime) {
-            turnOffPower();
-        }
+        kiloWattHours += (RMSPower * (2.05 / 60 / 60 / 1000));
+        Serial.println(
+                "A: " + String(RMSCurrent) + " W: " + String(RMSPower) + " kWh: " + String(kiloWattHours) + " W: " +
+                peakKiloWatt);
     }
 }
 
-void turnOnPower() {
-    digitalWrite(POWER_RELAY_PIN, LOW);
-    roomCurrentState = true;
-}
-
-void turnOffPower() {
-    digitalWrite(POWER_RELAY_PIN, HIGH);
-    roomCurrentState = false;
-}
-
-void serialPrintFormattedDateTime(RTCDateTime dateTime) {
-    Serial.print(dateTime.year);   Serial.print("-");
-    Serial.print(dateTime.month);  Serial.print("-");
-    Serial.print(dateTime.day);    Serial.print(" ");
-    Serial.print(dateTime.hour);   Serial.print(":");
-    Serial.print(dateTime.minute); Serial.print(":");
-    Serial.print(dateTime.second); Serial.print("");
-}
-
-void setupPower() {
-    pinMode(POWER_RELAY_PIN, OUTPUT);
-    digitalWrite(POWER_RELAY_PIN, HIGH);
-
-    roomOnHour = 11;
-    roomOnMinute = 22;
-    roomOffHour = 11;
-    roomOffMinute = 23;
+void resetPowerReadings() {
+    kiloWattHours = 0;
+    peakKiloWatt = 0;
 }
