@@ -52,6 +52,7 @@ Inspireret af udenlandske eksempler ønsker IT-Center Syd at udvikle og implemen
 
 # Architecture diagram
 ![architecture diagram](/DOCS/EGON-Architecture-Diagram.drawio.png)
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 # Roadmap
 - [X] Måle temperatur og luftfugtighed
@@ -65,6 +66,7 @@ Inspireret af udenlandske eksempler ønsker IT-Center Syd at udvikle og implemen
     * Dette var ikke muligt grundet begrænsninger ved ekstern API
   - [x] Automatisk opdatere lokale-info
   - [x] Styre temperatur/strøm efter lokalets brug
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 #  Summary and rundown
 EGON er lavet som et proof of concept i to dele IoT (denne) samt en kombineret back- og frontend, hvor besøgende kan se info om lokalet, samt hvor ansatte i serviceafdelingen kan se hvordan "status" er for et lokale.
@@ -112,6 +114,7 @@ Begge disse indstillinger angives i `/src/shared/secrets.h`
 | Topics                               | Access   | Method  |
 | :----------------------------------- | :------- | :------ |
 | home/alarm/arm                       | External | Pub/Sub |
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 # Libraries
 | Name               | Version | Component                    |
