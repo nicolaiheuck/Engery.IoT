@@ -104,7 +104,6 @@ Begge disse indstillinger angives i `/src/shared/secrets.h`
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Pin layout
-## Home
 | Arduino pin | Component pin | Component name     |
 |:------------|:--------------|:-------------------|
 | 5V          | VCC           |                    |
