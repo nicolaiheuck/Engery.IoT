@@ -19,157 +19,126 @@
 - [Summary and rundown](#summary-and-rundown)
 - [Getting started](#getting-started)
 - [Pin layout](#pin-layout)
-  - [Home](#home)
 - [MQTT Topics](#mqtt-topics)
 - [Libraries](#libraries)
 - [Components](#components)
 - [HIPO Diagrams](#hipo-diagrams)
-  - [Alarm](#alarm-1)
 - [Flowcharts](#flowcharts)
-  - [Alarm](#alarm-2)
 - [License](#license)
 - [Contact](#contact)
 </details>
 
 # Case
-Case bla bla bla
-* Punkt 1
-* Punkt 2
-* Punkt 3
+Inspireret af udenlandske eksempler ønsker IT-Center Syd at udvikle og implementere en række nye IT-services:
+> Info ved lokaler: Display ved alle lokaler, der angiver aktivitet, periode og lærernavn.
+
+> Energi- og Ressourceovervågning: En platform, der giver mulighed for overvågning og styring af skolernes energiforbrug og ressourceanvendelse. Dette kan inkludere intelligente målere og sensorer, der rapporterer forbrug i realtid og identificerer områder med potentiale for besparelser.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Requirements
-- [X] Done
-- [X] Done
-- [ ] Todo
+- [X] Infodisplay ved alle lokaler
+  - [X] Viser aktuel fag
+  - [X] Viser periode for lokalet
+  - [X] Viser lokale nummer/navn
+  - [ ] Viser aktuel lærer
+- [X] Energi- og ressourceovervågning
+  - [x] Overvågning af energiforbrug i lokale/område
+  - [x] Overvågning af temperatur og luftfugtighed
+  - [x] Styring af strøm
+  - [x] Styring af temperatur efter aktivitet i lokalet
+  - [x] Alarmer for afvigelser
+  - [x] Grafer/rapport over energiforbrug samt klima
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Architecture diagram
 ![architecture diagram](/DOCS/EGON-Architecture-Diagram.drawio.png)
 
 # Roadmap
-- [X] Done
-  - [ ] Sub thingy not done
-- [X] Done
-- [ ] Not done
-- [ ] Not done
-
+- [X] Måle temperatur og luftfugtighed
+  - [x] Sende data i et overskueligt format
+- [X] Måle strømforbrug
+  - [x] Sende data i et overskueligt format
+- [x] Modtage data om lokaler fra backend
+  - [X] Vise aktuel fag i lokale
+  - [x] Vise aktuel periode lokale er booket
+  - [ ] Vise aktuel lærer
+    * Dette var ikke muligt grundet begrænsninger ved ekstern API
+  - [x] Automatisk opdatere lokale-info
+  - [x] Styre temperatur/strøm efter lokalets brug
 
 #  Summary and rundown
-Summary with a sup message<sup>like this</sup> - neat right?
-> This is a quote in the summary
+EGON er lavet som et proof of concept i to dele IoT (denne) samt en kombineret back- og frontend, hvor besøgende kan se info om lokalet, samt hvor ansatte i serviceafdelingen kan se hvordan "status" er for et lokale.
+
+EGON kan samtidig styre både temperatur, samt lys/strøm i lokalerne alt efter om et lokale står tomt eller er i brug.
+
+Serviceafd. kan ændre et givent setpunkt for temperatur i et lokale efter ønske. Er et lokale booket vil displayet selv opdatere med relevant info (fag, lokale, periode, studie linie)
+
+> Nicolai er i tvivl om hvor "Sibiren" er, på hans skema står der kun 51.244. Nicolai kigger på displays rundt ved lokalerne og kan se både nummer, men også navn på lokalet.
+> 
+> Nicolai finder 51.244 - Sibirien og kan samtidig se at faget der kører er Embedded II på linien Datatekniker Prog. samt perioden hvor faget kører. Det fag stemmer overens med hans skema, og Nicolai har derved fundet det korrekte lokale.
+
+> Serviceafdelingen vil gerne se om nogle lokaler bruger meget strøm i weekenden.
+> 
+> De slår op på webinterfacet, og kan se at den ene fløj bruger meget strøm i weekenden - de vælger at "drill down" i systemet, og kan se at et bestemt lokale bruger meget strøm. De kan så undersøge om det er relevant, eller om strømmen skal slukkes automatisk i weekenden.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
 # Getting started
-Quick guide with a `code block` 
+EGON er bygget op over en microcontroller af typen Arduino MKR WiFi 1010.
 
-We also have a code block block thing
-```csharp
-temperature2 = newDHT.readTemperature();
-humidity2 = newDHT.readHumidity();
-```
+Hvert lokale skal have sin egen microcontroller, som har følgende moduler:
+* DHT11 temperatur- og fugtighedsmåler
+* E-Ink display
+* Spændings transducer
+* Relæ
+* RTC (Real Time Clock)
 
-Make sure to read the setup!
+Meningen med EGON er at man monterer klima sensoren et centralt sted i rummet, gerne skygget for solen.
+
+Derudover skal transduceren monteres over den primære fase der går ind i lokalet (der kan monteres flere hvis rummet har
+mere end en fase)
+
+Når EGON er monteret vil den automatisk logge på det angivne WiFi netværk, og derefter kontakte den MQTT broker der er angivet i systemet.
+Begge disse indstillinger angives i `/src/shared/secrets.h`
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Pin layout
-
 ## Home
-| Arduino pin | Component pin | Component name     | Volt                   |
-|:------------|:--------------|:-------------------|:-----------------------|
-| 5V          | VCC           | HC-SR04 Ultrasound | 5V                     |
-| D6          | Trigger       | HC-SR04            |                        |
-| D5          | Echo          | HC-SR04            | 3,3v (voltage divider) |
-| GND         | GND           | HC-SR04            |                        |
-| SDA (D11)   | SDA           | SSD1306 OLED       |                        |
-| SCL (D12)   | SCL           | SSD1306            |                        |
-| 5V          | VCC           | SSD1306            | 5V                     |
-| GND         | GND           | SSD1306            |                        |
-| D7          | RST           | RC522 RFID reader  |                        |
-| D13         | SDA (SS)      | RC522              |                        |
-| SCK (D9)    | SCK           | RC522              |                        |
-| MOSI (D8)   | MOSI          | RC522              |                        |
-| MISO (D10)  | MISO          | RC522              |                        |
-| VCC         | VCC           | RC522              | 3,3V                   |   
-| GND         | GND           | RC522              |                        |  
-| D14         | SIG           | SG90 Servo         |                        |  
-| VCC         | VCC           | SG90               | 3,3V                   |  
-| GND         | GND           | SG90               |                        |  
-| A3/D18      | 1             | 4x4 Matrix keypad  |                        |  
-| A4/D19      | 2             | Keypad             |                        |  
-| A5/D20      | 3             | Keypad             |                        |  
-| A6/D21      | 4             | Keypad             |                        |  
-| D0          | 5             | Keypad             |                        |  
-| D1          | 6             | Keypad             |                        |  
-| D2          | 7             | Keypad             |                        |  
-| D3          | 8             | Keypad             |                        |  
+| Arduino pin | Component pin | Component name     |
+|:------------|:--------------|:-------------------|
+| 5V          | VCC           | HC-SR04 Ultrasound |
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # MQTT Topics
 | Topics                               | Access   | Method  |
 | :----------------------------------- | :------- | :------ |
 | home/alarm/arm                       | External | Pub/Sub |
-| home/alarm/alarm                     | External | Sub     |
-| home/alarm/alarm                     | Internal | Pub     |
-| home/climate/status/#                | External | Sub     |
-| home/climate/status/[section]/[type] | Internal | Pub     |
-| home/climate/servo                   | External | Pub     |
-| home/log/[logLevel]/[type]           | Internal | Pub     |
-| home/log/#                           | External | Sub     |
 
 # Libraries
 | Name               | Version | Component                    |
 | ------------------ | ------- | ---------------------------- |
 | Adafruit SSD1306   | 2.5.7   | OLED display                 |
-| DHT sensor library | 1.4.4   | DHT11 sensor                 |
-| NTPClient          | 3.2.1   |                              |
-| Servo              | 1.1.8   | Servo motors                 |
-| WiFiNINA           | 1.8.13  |                              |
-| MQTT               | 2.5.0   |                              |
-| Keypad             | 3.1.1   | 4x4 keypad                   |
-| MFRC522            | 1.4.10  | RFID reader                  |
-| Wire               | 1.8.2   | I<sup>2</sup>C communication |
-| SPI                | 1.9.8   | SPI communication            |
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
 # Components
-| Device              | Amount | Function                                                     | Controller |
-|---------------------| ------ | ------------------------------------------------------------ | ---------- |
-| Arduino MKR1010     | 3      | Microcontroller                                              |            |
-| DHT11               | 3      | Temperature and humidity sensor                              | Climate    |
-| MQ-2                | 1      | Gas/air quality sensor                                       | Climate    |
-| Servo               | 2      | Controlling window and garage door                           | Climate    |
-| REED switch         | 1      | Intrusion detection, front door                              | Alarm      |
-| HC-SR501 PIR sensor | 2      | Intrusion (motion) detection, living room                    | Alarm      |
-| HC-SR04 Ultrasound  | 1      | Automatic doors                                              | Home/entry |
-| RC522 RFID reader   | 1      | Entry system                                                 | Home/entry |
-| 4x4 Keypad          | 1      | Entry system                                                 | Home/entry |
-| SSD1306 128x64 OLED | 1      | Peripheral display around the house (time, temp, status etc. | Home/entry |
-* The system is built for expansion, there is very little work in attaching multiple devices to the system, that could be more intrusion sensors, a buzzer, multiple displays etc.
+| Device              | Amount | Function                                                     |
+|---------------------| ------ | ------------------------------------------------------------ |
+| Arduino MKR1010     | 1      | Microcontroller                                              |
+| DHT11               | 1      | Temperature and humidity sensor                              |
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # HIPO Diagrams
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-## Alarm
 ![alarm hipo diagram](/Docs/Alarm_HIPO.png)
 `/Docs/Alarm_HIPO.png`
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Flowcharts
-
-## Alarm
 ![alarm flowchart](/Docs/Alarm_Flowchart.png)
 `/Docs/Alarm_Flowchart.png`
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
 # License
 * Hardware: CC-BY-LA (Creative Commons)
-* API: GPLv3
-* Frontend: GPLv3
+* Software: MIT
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Contact
@@ -181,8 +150,6 @@ Make sure to read the setup!
 
 Project Link: [https://github.com/nicolaiheuck/Engery.IoT](https://github.com/nicolaiheuck/Engery.IoT)
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-<sup>1</sup> - Look at me!
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
