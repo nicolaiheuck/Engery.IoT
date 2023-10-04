@@ -133,8 +133,7 @@ Begge disse indstillinger angives i `/src/shared/secrets.h`
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # HIPO Diagrams
-![alarm hipo diagram](/Docs/Alarm_HIPO.png)
-`/Docs/Alarm_HIPO.png`
+![alarm hipo diagram](/DOCS/EGON-HIPO.drawio.png)
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Flowcharts
