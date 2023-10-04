@@ -138,8 +138,7 @@ Begge disse indstillinger angives i `/src/shared/secrets.h`
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Flowcharts
-![alarm flowchart](/Docs/Alarm_Flowchart.png)
-`/Docs/Alarm_Flowchart.png`
+![alarm flowchart](/DOCS/EGON%20Flowchart.drawio.png)
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # License
