@@ -45,8 +45,7 @@ Case bla bla bla
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Architecture diagram
-![architecture diagram](/Docs/Architecture_Diagram.png)
-`/Docs/Architecture_Diagram.png`
+![architecture diagram](/DOCS/EGON-Architecture-Diagram.drawio.png)
 
 # Roadmap
 - [X] Done
