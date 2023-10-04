@@ -105,7 +105,7 @@ Begge disse indstillinger angives i `/src/shared/secrets.h`
 ## Home
 | Arduino pin | Component pin | Component name     |
 |:------------|:--------------|:-------------------|
-| 5V          | VCC           | HC-SR04 Ultrasound |
+| 5V          | VCC           |                    |
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # MQTT Topics
@@ -120,10 +120,14 @@ Begge disse indstillinger angives i `/src/shared/secrets.h`
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Components
-| Device              | Amount | Function                                                     |
-|---------------------| ------ | ------------------------------------------------------------ |
-| Arduino MKR1010     | 1      | Microcontroller                                              |
-| DHT11               | 1      | Temperature and humidity sensor                              |
+| Device              | Amount | Function                       |
+|---------------------| ------ | ------------------------------ |
+| Arduino MKR1010     | 1      | Microcontroller                |
+| DHT11               | 1      | Temperatur og fugtighedsmåler  |
+| Relæ ting           | 1      | Relæ for strømstyring          |
+| Transducer ting     | 1      | Spændingsmåler                 |
+| RTC ting            | 1      | Holder styr på tiden           |
+| Skærm ting          | 1      | Visning af lokale-info         |
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # HIPO Diagrams
