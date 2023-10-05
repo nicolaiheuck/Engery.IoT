@@ -168,6 +168,38 @@ Begge disse indstillinger angives i `/src/shared/secrets.h`
 ![flowchart](/DOCS/EGON-Flowchart.drawio.png)
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+# Fritzing diagrams
+## E-paper
+![E-paper wiring diagram](/DOCS/fritzing/E-Paper%20Display.png)
+| Device                 | Amount | Function                               |
+|------------------------| ------ | -------------------------------------- |
+| Waveshare 2.9" e-Paper | 1      | Visning af lokale-info                 |
+
+## SCT-013
+![SCT-013 wiring diagram](/DOCS/fritzing/SCT013.png)
+| Device                 | Amount | Function                               |
+|------------------------| ------ | -------------------------------------- |
+| SCT-013-030 Transducer | 1      | Spændingsmåler                         |
+
+## RTC
+![RTC wiring diagram](/DOCS/fritzing/RTC.png)
+| Device                 | Amount | Function                               |
+|------------------------| ------ | -------------------------------------- |
+| DS3231 RTC             | 1      | Real Time Clock - Holder styr på tiden |
+
+## Termostat
+![Thermostat wiring diagram](/DOCS/fritzing/Cooler&Heater&DHT11.png)
+**Components used in diagram**<br>
+| Device                 | Amount | Function                               |
+|------------------------| ------ | -------------------------------------- |
+| DHT11                  | 1      | Temperatur og fugtighedsmåler          |
+
+## Relæ
+![Relay wiring diagram](/DOCS/fritzing/Relay.png)
+| Device                 | Amount | Function                               |
+|------------------------| ------ | -------------------------------------- |
+| HL-525 relæ            | 1      | Relæ for strømstyring                  |
+
 # License
 * Hardware: CC-BY-LA (Creative Commons)
 * Software: MIT
