@@ -104,40 +104,68 @@ Begge disse indstillinger angives i `/src/shared/secrets.h`
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Pin layout
-| Arduino pin | Component pin | Component name     |
-|:------------|:--------------|:-------------------|
-| 5V          | VCC           |                    |
+| Arduino pin | Component pin | Component name                  |
+|:----------- |:------------- |:------------------------------- |
+| 5V          | VCC           | DS3231 + DHT11 + relæ           |
+| GND         | GND           | DS3231 + DHT11 + e-Paper + relæ |
+| VCC         | VCC           | e-Paper display                 |
+| D12         | SCL           | e-Paper display                 |
+| D9          | CLK           | e-Paper display                 |
+| D8          | DIN           | e-Paper display                 |
+| D7          | DATA          | DHT11                           |
+| D6          | CS            | e-Paper display                 |
+| D5          | Input2        | Relæ                            |
+| D2          | RST           | e-Paper display                 |
+| D1          | DC            | e-Paper display                 |
+| D0          | BUSY          | e-Paper display                 |
+| A6          | K             | Transducer                      |
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # MQTT Topics
-| Topics                               | Access   | Method  |
-| :----------------------------------- | :------- | :------ |
-| home/alarm/arm                       | External | Pub/Sub |
+| Topics                                              | Who     | Method | Content        |
+| :-------------------------------------------------- | :------ | :----- | :------------- |
+| {skole}/{fløj}/{lokale}/pv/data                     | IoT     | Pub    | Telemetry data |
+| {skole}/{fløj}/{lokale}/pv/data                     | Backend | Sub    | Telemetry data |
+| {skole}/{fløj}/{lokale}/pv/requestlocation/location | IoT     | Pub    | (empty)        |
+| {skole}/{fløj}/{lokale}/pv/requestlocation/location | Backend | Sub    | (empty)        |
+| {skole}/{fløj}/{lokale}/pv/location                 | IoT     | Sub    | Location data  |
+| {skole}/{fløj}/{lokale}/pv/location                 | Backend | Pub    | Location data  |
+| {skole}/{fløj}/{lokale}/sp/thermostat               | IoT     | Sub    | SP for temp    |
+| {skole}/{fløj}/{lokale}/sp/thermostat               | Backend | Pub    | SP for temp    |
+| energy/onlinestate                                  | Backend | Pub    | Status for the backend (LWT) |
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Libraries
-| Name               | Version | Component                    |
-| ------------------ | ------- | ---------------------------- |
-| Adafruit SSD1306   | 2.5.7   | OLED display                 |
+| Name                    | Version | Component           |
+| ----------------------- | ------- | ------------------- |
+| WiFi NINA               | 1.8.13  | Wireless            |
+| Adafruit GFX            | 1.11.3  | Display             |
+| Adafruit Unified Sensor | 1.1.6   | DHT11               |
+| Adafruit DHT Sensor     | 1.4.4   | DHT11               |
+| ArduinoJson             | 6.21.3  | JSON (de)serializer |
+| EmonLib                 | 1.1.0   | Transducer          |
+| MQTT                    | 2.5.0   | MQTT client         |
+| DS3231                  | 1.0.1   | RTC                 |
+| EPD2IN9                 | 2.0.0   | e-Paper display     |
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Components
-| Device              | Amount | Function                       |
-|---------------------| ------ | ------------------------------ |
-| Arduino MKR1010     | 1      | Microcontroller                |
-| DHT11               | 1      | Temperatur og fugtighedsmåler  |
-| Relæ ting           | 1      | Relæ for strømstyring          |
-| Transducer ting     | 1      | Spændingsmåler                 |
-| RTC ting            | 1      | Holder styr på tiden           |
-| Skærm ting          | 1      | Visning af lokale-info         |
+| Device                 | Amount | Function                               |
+|------------------------| ------ | -------------------------------------- |
+| Arduino MKR1010        | 1      | Microcontroller                        |
+| DHT11                  | 1      | Temperatur og fugtighedsmåler          |
+| HL-525 relæ            | 1      | Relæ for strømstyring                  |
+| SCT-013-030 Transducer | 1      | Spændingsmåler                         |
+| DS3231 RTC             | 1      | Real Time Clock - Holder styr på tiden |
+| Waveshare 2.9" e-Paper | 1      | Visning af lokale-info                 |
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # HIPO Diagrams
-![alarm hipo diagram](/DOCS/EGON-HIPO.drawio.png)
+![hipo diagram](/DOCS/EGON-HIPO.drawio.png)
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # Flowcharts
-![alarm flowchart](/DOCS/EGON-Flowchart.drawio.png)
+![flowchart](/DOCS/EGON-Flowchart.drawio.png)
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 # License
