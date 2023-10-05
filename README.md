@@ -22,8 +22,14 @@
 - [MQTT Topics](#mqtt-topics)
 - [Libraries](#libraries)
 - [Components](#components)
-- [HIPO Diagrams](#hipo-diagrams)
+- [HIPO Diagram](#hipo-diagrams)
 - [Flowcharts](#flowcharts)
+- [Fritzing diagrams](#fritzing-diagrams)
+  - [e-Paper](#e-paper)
+  - [SCT-013-030](#sct-013)
+  - [RTC](#rtc)
+  - [Termometer](#thermometer)
+  - [Relæ](#relæ)
 - [License](#license)
 - [Contact](#contact)
 </details>
@@ -187,7 +193,7 @@ Begge disse indstillinger angives i `/src/shared/secrets.h`
 |------------------------| ------ | -------------------------------------- |
 | DS3231 RTC             | 1      | Real Time Clock - Holder styr på tiden |
 
-## Termostat
+## Thermometer
 ![Thermostat wiring diagram](/DOCS/fritzing/Cooler&Heater&DHT11.png)
 **Components used in diagram**<br>
 | Device                 | Amount | Function                               |
