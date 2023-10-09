@@ -35,13 +35,13 @@ void ensureConnectivity() {
 
     while (!mqttClient.connected()) {
         ledBlue();
-        setupMQTT("EGON_IoT", onMessageReceivedAlarm);
+        setupMQTT("EGON_IoT", onMessageReceived);
         mqttClient.subscribe(MQTT_GET_THERMOSTAT_SETTINGS);
         mqttClient.subscribe(MQTT_GET_LOCATION_INFO);
     }
 }
 
-void onMessageReceivedAlarm(String &topic, String &payload) {
+void onMessageReceived(String &topic, String &payload) {
     Serial.print("Topic: ");
     Serial.print(topic);
     Serial.print(" Payload: ");
@@ -50,7 +50,7 @@ void onMessageReceivedAlarm(String &topic, String &payload) {
     if (topic.endsWith(MQTT_GET_THERMOSTAT_SETTINGS_ENDS_WITH)) {
         DynamicJsonDocument newSettings(256);
         deserializeJson(newSettings, payload);
-        setThermostatSettings(newSettings["newTemperature"], newSettings["newHysteresis"]);
+        setThermostatSettings(newSettings["NewTemperature"], newSettings["NewHysteresis"]);
     }
 
     if (topic.endsWith(MQTT_GET_LOCATION_INFO_ENDS_WITH)) {

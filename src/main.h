@@ -15,6 +15,6 @@
 #include "power/power.h"
 
 void ensureConnectivity();
-void onMessageReceivedAlarm(String &topic, String &payload);
+void onMessageReceived(String &topic, String &payload);
 
 #endif
